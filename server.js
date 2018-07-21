@@ -22,18 +22,28 @@ var server = http.createServer(function(request, response){
 
 
 
-
-
-
-
-
-
-
-
-
-  console.log('方方说：得到 HTTP 路径\n' + path)
-  console.log('方方说：查询字符串为\n' + query)
-  console.log('方方说：不含查询字符串的路径为\n' + pathNoQuery)
+  console.log('HTTP 路径为\n' + path)
+  if(path == '/style.css'){
+    response.setHeader('Content-Type', 'text/css; charset=utf-8')
+    response.write('body{background-color: #9dc135;}h1{color:red}')
+    response.end()
+  }else if(path == '/script.js'){
+    response.setHeader('Content-Type', 'text/javascript; charset=utf-8')
+    response.write('alert("执行了JS")')
+    response.end()
+  }else if(path == '/'){
+    response.setHeader('Content-Type', 'text/html; charset=utf-8')
+    response.write('<!DOCTYPE>\n<html>' + 
+      '<head><link rel="stylesheet" href="/style.css">' + 
+      '</head><body>' + 
+      '<h1>你好</h1>' +
+      '<script src="/script.js"></script>' +
+      '</body></html>')
+    response.end()
+  }else{
+    response.statusCode = 404
+    response.end()
+  }
 
 
 
